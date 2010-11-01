@@ -16,7 +16,7 @@
 class Task1 : public Application
 {
 	private:
-		/**\brief Information flags describing provided infromation **/
+		/** \brief Information flags describing provided infromation **/
 		enum Flags
 		{
 			memSize=1<<0,	/**< memory size information is provided **/
@@ -29,7 +29,7 @@ class Task1 : public Application
 		};
 
 
-		/** \brief Symbol table for a.out executables **/
+		/* Symbol table for a.out executables **/
 		struct AOut_Symbol_Table
 		{
 			uint32_t tabsize;
@@ -38,7 +38,7 @@ class Task1 : public Application
 			uint32_t reserved;
 		};
 
-		/** \brief Section header table for ELF executables */
+		/* Section header table for ELF executables */
 		struct ELF_Section_Header_Table
 		{
 			uint32_t num;
@@ -47,7 +47,7 @@ class Task1 : public Application
 			uint32_t shndx;
 		};
 
-		/** \brief Loaded module information. **/
+		/* Loaded module information. **/
 		struct Module
 		{
 			uint32_t mod_start;
@@ -56,7 +56,7 @@ class Task1 : public Application
 			uint32_t reserved;
 		};
 
-		/** \brief Memory map information
+		/* Memory map information
 		 *
 		 * Be careful that the offset 0 is base_addr_low but not size.
 		 **/
@@ -71,7 +71,7 @@ class Task1 : public Application
 		};
 
 	public:
-		/** \brief Multiboot information **/
+		/* Multiboot information **/
 		struct Multiboot_Info
 		{
 			uint32_t flags;

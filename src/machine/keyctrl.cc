@@ -116,11 +116,11 @@ bool Keyboard_Controller::key_decoded () {
       break;
     case 58:
       gather.caps_lock (!gather.caps_lock ());
-      set_led (led::caps_lock, gather.caps_lock());
+      set_led (caps_lock, gather.caps_lock());
       break;
     case 70:
       gather.scroll_lock (!gather.scroll_lock ());
-      set_led (led::scroll_lock, gather.scroll_lock());
+      set_led (scroll_lock, gather.scroll_lock());
       break;
     case 69: // NUM_LOCK or BREAK ?
       if (gather.ctrl_left ()) {        // BREAK
@@ -128,7 +128,7 @@ bool Keyboard_Controller::key_decoded () {
         done = true;
       } else {                          // NUM_LOCK
         gather.num_lock (!gather.num_lock());
-        set_led (led::num_lock, gather.num_lock ());
+        set_led (num_lock, gather.num_lock ());
       }
       break;
     default:                            // other keys
@@ -180,9 +180,9 @@ void Keyboard_Controller::get_ascii_code () {
 /* PUBLIC METHODS */
 Keyboard_Controller::Keyboard_Controller () : ctrl_port (0x64), data_port (0x60) {
   // switch all LEDs off (some PCs switch LEDs on)
-  set_led (led::caps_lock, false);
-  set_led (led::scroll_lock, false);
-  set_led (led::num_lock, false);
+  set_led (caps_lock, false);
+  set_led (scroll_lock, false);
+  set_led (num_lock, false);
 
   // set maximal speed and delay of keyboard
   set_repeat_rate (0, 0);
@@ -198,12 +198,6 @@ Keyboard_Controller::Keyboard_Controller () : ctrl_port (0x64), data_port (0x60)
   }
 }
 
-Key Keyboard_Controller::key_hit () {
-  Key invalid;                      // invalid default key
-
-  return invalid;
-}
-
 void Keyboard_Controller::reboot () {
   int status;
 
@@ -214,13 +208,19 @@ void Keyboard_Controller::reboot () {
   do {                              // wait until last command was processed
     status = ctrl_port.inb ();
   } while ((status & inpb) != 0);
-  ctrl_port.outb (cpu_reset);       // reset
+  ctrl_port.outb (cmd_cpu_reset);       // reset
+}
+
+Key Keyboard_Controller::key_hit () {
+  Key invalid;                      // invalid default key
+  /* TODO: Insert sourcecode */
+  return invalid;
 }
 
 void Keyboard_Controller::set_repeat_rate (unsigned char speed, unsigned char delay) {
-  
+  /* TODO: Insert sourcecode */
 }
 
-void Keyboard_Controller::set_led (led::Leds led, bool on) {
-  
+void Keyboard_Controller::set_led (Leds led, bool on) {
+  /* TODO: Insert sourcecode */
 }

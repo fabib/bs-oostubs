@@ -16,9 +16,9 @@ CXXFLAGS+=${CFLAGS} -fno-rtti -nostdinc++
 LDFLAGS=-e entry -T misc/sections
 
 OBJDUMPFLAGS=-Cxd
-EMUFLAGS+=-no-kqemu -L /local/usr/x86_64/share/qemu -boot d -cdrom 
+EMUFLAGS+=-L /local/usr/x86_64/share/qemu -boot d -cdrom 
 DEBUGFLAGS+=-s -S
 GDBFLAGS+=-x misc/gdb.script
 
-LDHEAD := $(shell $(CXX) --print-file-name=crti.o && $(CXX) --print-file-name=crtbegin.o)
-LDTAIL := $(shell $(CXX) --print-file-name=crtend.o && $(CXX) --print-file-name=crtn.o)
+LDHEAD := $(addprefix misc/sunpool336/build/,crti.o crtbegin.o)
+LDTAIL := $(addprefix misc/sunpool336/build/,crtend.o crtn.o)

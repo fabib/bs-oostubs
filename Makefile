@@ -1,7 +1,7 @@
 #----- START OF INPUT BLOCK -----#
 TARGET=oostubs
 
-# one of linux, linux64, sunpool
+# one of linux, linux64, linux64cross, sunpool
 PLATFORM=sunpool
 
 CFLAGS=-Wall -O0 -g

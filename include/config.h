@@ -6,7 +6,6 @@
  *                                                                           *
  *---------------------------------------------------------------------------*/
 
-/* Deactivate include guard for assembler files */
 #ifndef __config_header__
 #define __config_header__
 

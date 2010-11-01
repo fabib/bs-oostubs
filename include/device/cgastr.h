@@ -12,7 +12,8 @@
 #include "object/o_stream.h"
 #include "machine/cgascr.h"
 
-/**
+/** \brief CGA based output mechanism, similar to cout
+ *
  * CGA_Stream enables the output of different data as string using the CGA 
  * screen. It is derived from the class CGA_Screen which makes additional 
  * formats and effects available.
@@ -21,14 +22,13 @@
 class CGA_Stream  : public O_Stream, public CGA_Screen {
 public:
  
-  /**
-   * The Method flush() prints the curent content of the Stringbuffer. 
-   * It is called automaticaly as soon as the buffer is full or manualy 
-   * if an output is forced.
+  /** \brief flush the content of the internal buffer
    *
    * \todo write implementation
    *
-   */
+   * It is called automaticaly as soon as the buffer is full or if a newline is
+   * encountered.
+   **/
   virtual void flush();
 };
 

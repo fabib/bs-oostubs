@@ -39,29 +39,39 @@ private:
    **/
   const IO_Port data_port;
 
-  /** defined bits in the status register */
-  enum { outb = 0x01, inpb = 0x02, auxb = 0x20 };
-
-  /** keyboard commands. */
-  struct kbd_cmd {
-  	enum { set_led = 0xed, set_speed = 0xf3 };
+  /** \brief Bit masks of the status register **/
+  enum StatusMasks{ 
+	  outb = 0x01, /**< output buffer filled **/
+	  inpb = 0x02, /**< input buffer filled **/
+	  auxb = 0x20  /**< auxilary input **/
   };
-  
-  enum { cpu_reset = 0xfe };
 
-  /** keyboard responses */
-  struct kbd_reply {
-	  enum { ack = 0xfa };
-  }; 
+  /**  \brief keyboard commands **/
+  enum Commands{
+	  cmd_set_led = 0xed, /**< set the keyboard leds **/
+	  cmd_set_speed = 0xf3, /**<change repeat rate and delay **/
+	  cmd_cpu_reset = 0xfe /*< reset the cpu **/
+  };
 
-  /** constants used to decode the keyboard codes */
-  enum { break_bit = 0x80, prefix1 = 0xe0, prefix2   = 0xe1 };
+  /** \brief keyboard responses **/
+  enum Responses{ 
+	  ack = 0xfa /**< acknowledged command**/
+  };
+
+  /** \brief Decoding constants */
+  enum Decodes{ 
+	  break_bit = 0x80, 
+	  prefix1 = 0xe0, 
+	  prefix2   = 0xe1
+  };
 
 public:
-  /** name of the keyboard LEDs */
-  struct led {
-    enum Leds{ caps_lock = 4, num_lock = 2, scroll_lock = 1 };
-  };
+  /** \brief LED names */
+    enum Leds{ 
+		caps_lock = 4, 
+		num_lock = 2, 
+		scroll_lock = 1
+	};
   
 private:
   /** \brief Scancode translation table without modifier**/
@@ -79,7 +89,8 @@ private:
   /** \brief Scancode translation table to special keys for numeric block**/
   static unsigned char scan_num_tab[];
          
-  /**
+  /** \brief interpret the reveived scancode and modifier bits
+   *
    * Interpretes the make and break code of the keyboard an returns an valid
    * ASCII code, scancode and information about modifier keys like SHIFT and 
    * CTRL. 
@@ -88,54 +99,55 @@ private:
    */
   bool key_decoded ();
 
-  /** 
+  /** \brief convert the received scancode and modfier bits to an ascii char
+   *
    * Determins the ASCII code of a key according to the scancode and 
    * modifier bits.
    */
   void get_ascii_code ();
 public:
 
-   /**
-    * Default constructor initially turns all LEDs of and sets speed and delay
-    * of the keyboard maximal also clears the keyboard buffers.
-    */
+   /** \brief Default constructor, turns all LEDs off and set speed and delay
+	* maximal 
+	**/
    Keyboard_Controller ();
 
-  /**
+  /** \brief get the last pressed key
+   *
+   * \todo write implementation
+   *
    * Is used to get the information of the pressed key after is has been 
    * pressed. If a scancode and ASCII code could not be determined an invalid 
    * key is returned.
    *
-   * \todo write implementation
-   *
-   * @return an invalid key if data transfer has not ended otherwise a valid 
+   * \return an invalid key if data transfer has not ended otherwise a valid 
    *         key with every information is returned. Can be checked withd 
    *         Key::valid().
    */
   Key key_hit ();
 
-  /** \brief Reboots the computer using a keyboard controller command. **/
+  /** \brief reboots the computer
+   *
+   * This uses a keyboard controller command. **/
   void reboot ();
 
-  /**
-   * Sets the speed and delay of repeats of the keyboard. 
+  /** \brief set the speed and delay of repeats of the keyboard. 
    *
    * \todo write implementation
    *
-   * @param speed defines speed of a repeat (0 fast - 31 slow)
-   * @param delay defines delay of a repeat (0 minimal - 7 maximal)
+   * \param speed defines speed of a repeat (0 fast - 31 slow)
+   * \param delay defines delay of a repeat (0 minimal - 7 maximal)
    */
   void set_repeat_rate (unsigned char speed, unsigned char delay);
 
-  /**
-   * Switches the specified LED of the keyboard on or off.
+  /** \brief switch the specified LED of the keyboard on or off.
    * 
    * \todo write implementation
    *
-   * @param led specifies the LED turned on or off
-   * @param on if TRUE LED is turned on otherwise off
+   * \param led specifies the LED turned on or off
+   * \param on if TRUE LED is turned on otherwise off
    */
-  void set_led (led::Leds led, bool on);
+  void set_led (Leds led, bool on);
 };
 
 #endif

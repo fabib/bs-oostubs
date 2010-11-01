@@ -10,7 +10,6 @@ CC:=@${CC}
 ASM:=@${ASM}
 LD:=@${LD}
 EMU:=@${EMU}
-GDB:=@${GDB}
 SED:=@${SED}
 OBJDUMP:=@${OBJDUMP}
 

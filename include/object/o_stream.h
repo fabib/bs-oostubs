@@ -11,7 +11,8 @@
 
 #include "object/strbuf.h"
 
-/**
+/** \brief Manipulation class providing formatted output support
+ *
  * O_Stream extends the Stringbuffer and contains the definitions of the 
  * << operator of the most important predefined datatypes. It is used to 
  * implement the known usability of the C++ io_stream library. 
@@ -50,17 +51,18 @@ public:
    * **/
  virtual ~O_Stream();
 
-  /** 
+  /** \brief overloded output operator
+   *
+   * \todo write implementation
+   *
    * Operator << overloading the default operator. Is used to convert
    * the given datatype into a string that can be printed on an output device.
    * This operator has to be implemented for every standard data type (char, 
    * unsigned char, short, unsigned short, int, unsigned int, long, 
    * unsigned long, void*, char*).
    *
-   * \todo write implementation
-   *
-   * @param value value of datatype (has the type of datatype) 
-   * @return reference to the current O_Stream object.
+   * \param value value of datatype (has the type of datatype) 
+   * \return reference to the current O_Stream object.
    **/
   O_Stream& operator << (char value); 
 
@@ -94,14 +96,15 @@ public:
   /** \copydoc operator<<(char value) **/
   O_Stream& operator << (void* value);
 
-  /**
-   * Operator << overloading the default operator is used to call defined 
-   * manipulators.
+  /** \brief overloaded output operator for manipulator functions
    *
    * \todo write implementation
    *
-   * @param f mainpulator function to be applied to the ostream
-   * @return reference to the current O_Stream object.
+   * Operator << overloading the default operator is used to call defined 
+   * manipulators.
+   *
+   * \param f mainpulator function to be applied to the ostream
+   * \return reference to the current O_Stream object.
    **/
   O_Stream& operator << (O_Stream& (*f) (O_Stream&));
 
@@ -128,19 +131,34 @@ public:
  * output (eg. by choosing a basis for the display of digits).
  **/ 
 
-/** ENDL: prints buffer after adding a newline at the end of the buffer */
+/** \brief print buffer after adding a newline
+ *
+ * \todo write implementation
+ **/
 	O_Stream& endl(O_Stream &out);
  
-/** BIN: choose binary basis for display */
+/** \brief switch basis of o_stream to binary
+ *
+ * \todo write implementation
+ **/
 	O_Stream& bin(O_Stream &out);
  
-/** OCT: choose oktale basis for display */
+/** \brief switch basis of o_stream to octal
+ *
+ * \todo write implementation
+ **/
 	O_Stream& oct(O_Stream &out);
  
-/** DEC: choose dezimal basis for display */
+/** \brief switch basis of o_stream to decimal
+ *
+ * \todo write implementation
+ **/
 	O_Stream& dec(O_Stream &out);
  
-/** HEX: choose hexadezimal basis for display */
+/** \brief switch basis of o_stream to hexadecimal
+ *
+ * \todo write implementation
+ **/
 	O_Stream& hex(O_Stream &out);
  
 #endif

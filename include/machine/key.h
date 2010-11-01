@@ -9,16 +9,13 @@
 #ifndef __Key_include__
 #define __Key_include__
 
-/**
- * Class Key describes a key object using the ASCII code, Scancode and 
- * modifier bits.
+/** \brief Translator between scancodes ASCII-code and modifier bits.
  */
 class Key {
   unsigned char asc;
   unsigned char scan;
   unsigned char modi;
 
-  /** bitmask for modifier keys */
   struct mbit {
   	enum {
       shift      = 1,
@@ -33,31 +30,48 @@ class Key {
   };
 
 public:
-  /**
-   * Default constructor seting ASCII, scancode and modifier of the key to 0.
-   * That way an invalid keycode is generated.
+  /** \brief Default constructor setring ASCII, scancode and modifier to 0
+   *
+   * A freshly constructed key is invalid.
    */
   Key () : asc (0), scan (0), modi (0) {}
 
-  /**
-   * Tests if the current key is valid.
+  /** \brief test for validity.
    *
-   * return TRUE if scancode does not equals 0 otherwise FALSE is returned.
+   * return  false if scancode is 0, true otherwise
    */
   bool valid ()      { return scan != 0; }
 
-  /**
-   * Sets the key to an invalid keycode by reseting the scancode (default = 0).
+  /** \brief invalidate this key
+   *
+   * By setting the scancode to 0 this key will be invalid
    */
   void invalidate () { scan = 0; }
 
-  // ASCII, SCANCODE: getter and setter methods for ASCII und Scancode
+  /** \brief set ascii value
+   *
+   * \param a the new ascii value
+   **/
   void ascii (unsigned char a) { asc = a; }
-  void scancode (unsigned char s) { scan = s; }
-  unsigned char ascii () { return asc; }
-  unsigned char scancode () { return scan; }
 
-  // methods to set and erase the keys: SHIFT, ALT, CTRL, ...
+  /** \brief set scancode value
+   *
+   * \param s the new scancode value
+   **/
+  void scancode (unsigned char s) { scan = s; }
+
+  /** \brief get ascii value
+   *
+   * \return the current ascii value contained in this key
+   **/
+  unsigned char ascii () const { return asc; }
+
+  /** \brief get scancode value
+   *
+   * \return the current scancode value contained in this key
+   **/
+  unsigned char scancode () const { return scan; }
+
   void shift (bool pressed)
     { modi = pressed ? modi | mbit::shift : modi & ~mbit::shift; }
   void alt_left (bool pressed)
@@ -87,9 +101,14 @@ public:
   bool alt ()         { return alt_left ()  | alt_right (); }
   bool ctrl ()        { return ctrl_left () | ctrl_right (); }
 
+  /** \brief overloded cast operator
+   *
+   * Can be used to cast this key to an ascii char.
+   *
+   * \return the ascii value of this key contained in a char
+   **/
   operator char ()    { return (char) asc; }
 
-  // Scancodes for specific keys
   struct scan { 
   	enum {
       f1 = 0x3d, del = 0x53, up=72, down=80, left=75, right=77,

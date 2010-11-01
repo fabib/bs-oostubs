@@ -9,7 +9,10 @@
 #ifndef __strbuf_include__
 #define __strbuf_include__
 
-/**
+/* INCLUDES */
+
+/** \brief Buffer containing text to output
+ *
  * Stringbuffer implements a buffer gathering characters that have to be 
  * outputed on the screen or a differenct output device. If the buffer is full
  * or the user wishes to print the content of the buffer on the output device
@@ -32,35 +35,38 @@ protected:
    * \todo write declaration
    **/
 
-  /** Default constructor of Stringbuffer setting the buffer empty.
+  /** \brief Default constructor
+   *
+   * Sets the buffer to be empty.
    *
    * \todo write implementation
    **/
   Stringbuffer();
 
-  /** Default destructor of Stringbuffer. Flushes the buffer.
+  /** \brief Default destructor
    *
    * \todo write implementation
    **/
   virtual ~Stringbuffer();
 
-  /** 
-   * Method put() inserts a character into the buffer. If the buffer is full 
-   * after the insertion the buffer has to be emptied by calling the method 
-   * flush().
+  /** \brief insert a character into the buffer
    *
    * \todo write implementation
    *
-   * @param c character to be inserted into the buffer
+   * If the buffer is full after the insertion the buffer has to be emptied
+   * by calling flush().
+   *
+   * \param c character to be inserted into the buffer
    **/
   void put(char c); 
 
-  /**
+  /** \brief flush the content of the buffer to the screen
+   *
    * Method flush() prints the curent content of the buffer. It is called 
    * automaticaly as soon as the buffer is full or manualy if an output is 
    * forced. After printing the buffer content the buffer pointer is reseted.
-   * To enalbe the Stringbuffer to work with different output mechanisms the
-   * method has to be implemented in a subclass of Stringbuffer.
+   * To enable the Stringbuffer to work with different output mechanisms the
+   * method has to be implemented in a subclass.
    **/
   virtual void flush() = 0;
 };

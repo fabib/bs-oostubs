@@ -1,22 +1,23 @@
-CC=i686-pc-linux-gnu-gcc
-CXX=i686-pc-linux-gnu-g++
-ASM=i686-pc-linux-gnu-gcc
-LD=i686-pc-linux-gnu-ld
+CC=gcc
+CXX=g++
+ASM=gcc
+LD=ld
 EMU=qemu
 EMUTARGET=${TARGET}
-GDB=i686-pc-linux-gnu-gdb
+GDB=gdb
 SED=sed
-OBJDUMP=i686-pc-linux-gnu-objdump
+OBJDUMP=objdump
 DOCGEN=doxygen
 
-CFLAGS+=-fno-exceptions
+CFLAGS+=-fno-exceptions -m32 -fno-stack-protector
 CXXFLAGS+=${CFLAGS} -fno-rtti -nostdinc++
-LDFLAGS=-e entry -T misc/sections
+LDFLAGS=-e entry -T misc/sections -melf_i386
+ASMFLAGS=--32
 
 OBJDUMPFLAGS=-Cxd
 EMUFLAGS+=-no-kvm -kernel
 DEBUGFLAGS+=-s -S
 GDBFLAGS+=-x misc/gdb.script
 
-LDHEAD := $(shell $(CXX) --print-file-name=crti.o && $(CXX) --print-file-name=crtbegin.o)
-LDTAIL := $(shell $(CXX) --print-file-name=crtend.o && $(CXX) --print-file-name=crtn.o)
+LDHEAD := $(addprefix misc/linux64/build/, crti.o crtbegin.o)
+LDTAIL := $(addprefix misc/linux64/build/, crtend.o crtn.o)
