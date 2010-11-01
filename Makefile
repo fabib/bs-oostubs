@@ -2,7 +2,7 @@
 TARGET=oostubs
 
 # one of linux, linux64, linux64cross, sunpool
-PLATFORM=sunpool
+PLATFORM=linux
 
 CFLAGS=-Wall -O0 -g
 CXXFLAGS=
