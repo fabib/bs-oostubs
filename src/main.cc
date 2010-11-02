@@ -9,6 +9,7 @@
 /* INCLUDES */
 
 #include "machine/multiboot.h"
+#include "machine/cgascr.h"
 
 /* GLOBAL OBJECTS */
 
@@ -31,6 +32,10 @@ extern "C" void kernel(uint32_t magic, const Multiboot_Info* addr);
 
 void kernel(uint32_t magic, const Multiboot_Info* addr){
 
+CGA_Screen scr;
+scr.clear();
+scr.setpos(4,10);
+scr.print("abcdefghijklmnopqrstuvwxyz",26,15);
 //Task1 task(magic, addr);
 
 //task.action();

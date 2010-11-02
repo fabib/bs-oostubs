@@ -10,6 +10,7 @@
 #define __screen_include__
 
 /* INCLUDES */
+#include "machine/io_port.h"
 
 /** \brief CGA-Dispaly driver
  *
@@ -17,43 +18,28 @@
  * the screen memory and I/O ports directly.
  */
 class CGA_Screen {
-	
 public:
-
   /** \brief Constructor
-   *
-   * \todo write implementation
    **/
   CGA_Screen();
 
   /** \brief Destructor
-   *
-   * \todo write implementation
    **/
   ~CGA_Screen();
 
   /** \brief set the cursor position
-   *
-   * \todo write implementation
-   *
    * \param x column number of new position 
    * \param y row number of new position
    */
   void setpos(unsigned short x, unsigned short y);
 
   /** \brief get the cursor position
-   *
-   * \todo write implementation
-   *
    * \param x reference for column number of current position
    * \param y reference for row number of curent position
    */
   void getpos(unsigned short& x, unsigned short& y) const;
 
   /** \brief print a character to a specific position
-   *
-   * \todo write implementation
-   *
    * \param x column number of display position
    * \param y row number of display position
    * \param c character to be displayed
@@ -62,9 +48,6 @@ public:
   void show(unsigned short x, unsigned short y, char c, unsigned char attrib);
 
   /** \brief print a string to the current position
-   * 
-   * \todo write implementation
-   *
    * \param string string of characters to be displayed
    * \param n number auf characters in string
    * \param attrib display attributs
@@ -72,9 +55,6 @@ public:
   void print(const char* string, unsigned int n, unsigned char attrib);
 
   /** \brief scroll the display one line upwards
-   *
-   * \todo write implementation
-   *
    * The new row at the bottom of the screen is filled with spaces.
    **/
   void scrollup();
@@ -84,6 +64,10 @@ public:
    * \todo write implementation
    **/
   void clear();
+
+private:
+  char* vram;
+  IO_Port cursor_idx, cursor_dta;
 };
 
 #endif
