@@ -25,22 +25,22 @@ void CGA_Screen::clear() {
 }
 
 void CGA_Screen::getpos(unsigned short & x, unsigned short & y) const {
-  unsigned short offset;
+  UShort offset;
   cursor_idx.outb(14);
-  offset = cursor_dta.inb() << 8;
+  offset.byte.high = cursor_dta.inb();
   cursor_idx.outb(15);
-  offset += cursor_dta.inb();
-
-  y = offset / SCR_WIDTH;
-  x = offset % SCR_WIDTH;
+  offset.byte.low = cursor_dta.inb();
+  y = offset.value / SCR_WIDTH;
+  x = offset.value % SCR_WIDTH;
 }
 
 void CGA_Screen::setpos(unsigned short x, unsigned short y) {
-  unsigned short offset = SCR_WIDTH * y + x;
-  cursor_idx.outb(15);
-  cursor_dta.outb(offset);
+  UShort offset;
+  offset.value = SCR_WIDTH * y + x;
   cursor_idx.outb(14);
-  cursor_dta.outb(offset >> 8);
+  cursor_dta.outb(offset.byte.high);
+  cursor_idx.outb(15); // low
+  cursor_dta.outb(offset.byte.low);
 }
 
 void CGA_Screen::show(unsigned short x, unsigned short y, char c, unsigned char attrib) {

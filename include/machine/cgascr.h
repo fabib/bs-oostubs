@@ -61,13 +61,20 @@ public:
 
   /** \brief clear the screen
    *
-   * \todo write implementation
    **/
   void clear();
 
 private:
   char* vram;
   IO_Port cursor_idx, cursor_dta;
+
+  union UShort {
+    unsigned short value;
+    struct {
+      unsigned char low;
+      unsigned char high;
+    } byte;
+  };
 };
 
 #endif
