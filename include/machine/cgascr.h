@@ -28,7 +28,7 @@ public:
   ~CGA_Screen();
 
   /** \brief set the cursor position
-   * \param x column number of new position 
+   * \param x column number of new position
    * \param y row number of new position
    */
   void setpos(unsigned short x, unsigned short y);
@@ -55,12 +55,10 @@ public:
   void print(const char* string, unsigned int n, unsigned char attrib);
 
   /** \brief scroll the display one line upwards
-   * The new row at the bottom of the screen is filled with spaces.
    **/
   void scrollup();
 
   /** \brief clear the screen
-   *
    **/
   void clear();
 

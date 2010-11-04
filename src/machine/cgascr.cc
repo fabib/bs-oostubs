@@ -11,17 +11,17 @@
 
 #define SCR_HEIGHT 25
 #define SCR_WIDTH  80
+#define VROFF(x,y) (SCR_WIDTH*2*(y)+(x)*2)
 
 CGA_Screen::CGA_Screen() : cursor_idx(0x3D4), cursor_dta(0x3D5) {
   vram = (char*) 0xB8000;
   setpos(0,0);
+  clear();
 }
 CGA_Screen::~CGA_Screen() {}
 
 void CGA_Screen::clear() {
-  for (int i = 0; i <= (SCR_HEIGHT * SCR_WIDTH * 2); i++) {
-    vram[i] = 0;
-  }
+  for (int i = 0; i <= VROFF(SCR_WIDTH - 1, SCR_HEIGHT); i++) vram[i] = 0;
 }
 
 void CGA_Screen::getpos(unsigned short & x, unsigned short & y) const {
@@ -39,14 +39,13 @@ void CGA_Screen::setpos(unsigned short x, unsigned short y) {
   offset.value = SCR_WIDTH * y + x;
   cursor_idx.outb(14);
   cursor_dta.outb(offset.byte.high);
-  cursor_idx.outb(15); // low
+  cursor_idx.outb(15);
   cursor_dta.outb(offset.byte.low);
 }
 
 void CGA_Screen::show(unsigned short x, unsigned short y, char c, unsigned char attrib) {
-  int offset = (SCR_WIDTH * y * 2) + (x * 2);
-  vram[offset] = c;
-  vram[offset + 1] = attrib;
+  vram[VROFF(x, y)]     = c;
+  vram[VROFF(x, y) + 1] = attrib;
 }
 
 void CGA_Screen::print(const char* string, unsigned int n, unsigned char attrib) {
@@ -62,4 +61,12 @@ void CGA_Screen::print(const char* string, unsigned int n, unsigned char attrib)
     }
   }
   setpos(x, y);
+}
+
+void CGA_Screen::scrollup() {
+  int i;
+  for (i = SCR_WIDTH*2; i <= VROFF(SCR_WIDTH, SCR_HEIGHT - 1); i++)
+      vram[i - SCR_WIDTH*2] = vram[i];
+  for (i = 0; i <= SCR_WIDTH; i++)
+      show(i, SCR_HEIGHT - 1, ' ', 0);
 }
