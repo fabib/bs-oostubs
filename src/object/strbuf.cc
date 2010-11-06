@@ -8,4 +8,23 @@
 
 #include "object/strbuf.h"
 
-/* ToDo: insert sourcecode */ 
+
+
+Stringbuffer::Stringbuffer()
+{
+pos = buffer;
+
+}
+
+Stringbuffer::~Stringbuffer(){
+}
+
+void Stringbuffer::put(char c)
+{
+if(pos >= buffer+16){
+flush();
+pos=buffer;
+}
+*pos = c;
+pos++;
+}

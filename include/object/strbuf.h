@@ -29,12 +29,13 @@ protected:
    *
    * \todo write declaration
    **/
-
+	char buffer[16];
   /** buffer pointer saving the position of the next insertion 
    *
    * \todo write declaration
    **/
-
+	char* pos;
+	
   /** \brief Default constructor
    *
    * Sets the buffer to be empty.
