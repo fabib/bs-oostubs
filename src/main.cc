@@ -10,7 +10,7 @@
 
 #include "machine/multiboot.h"
 #include "machine/cgascr.h"
-
+#include "machine/keyctrl.h"
 /* GLOBAL OBJECTS */
 
 /** \todo define global objects **/
@@ -33,9 +33,22 @@ extern "C" void kernel(uint32_t magic, const Multiboot_Info* addr);
 void kernel(uint32_t magic, const Multiboot_Info* addr){
 
 CGA_Screen scr;
-scr.clear();
-scr.setpos(4,10);
-scr.print("abcdefghijklmnopqrstuvwxyz",26,15);
+Keyboard_Controller kctrl;
+Key k;
+unsigned short x=0;
+unsigned short y=0;
+while(true){
+k = kctrl.key_hit();
+char l = k.ascii();
+if(l>0){
+scr.show(x,y,k.ascii(),15);
+x++;
+if(x>80){x=0;y++;};
+}}
+
+//scr.clear();
+//scr.setpos(4,10);
+//scr.print("abcdefghijklmnopqrstuvwxyz",26,15);
 //Task1 task(magic, addr);
 
 //task.action();

@@ -213,12 +213,19 @@ void Keyboard_Controller::reboot () {
 
 Key Keyboard_Controller::key_hit () {
   Key invalid;                      // invalid default key
-  /* TODO: Insert sourcecode */
-  return invalid;
+  int status;
+do{
+	status = ctrl_port.inb();
+	   
+}while((status&outb)==0);
+code = data_port.inb();
+if(key_decoded())return gather;
+
+ return invalid;
 }
 
 void Keyboard_Controller::set_repeat_rate (unsigned char speed, unsigned char delay) {
-  /* TODO: Insert sourcecode */
+
 }
 
 void Keyboard_Controller::set_led (Leds led, bool on) {
